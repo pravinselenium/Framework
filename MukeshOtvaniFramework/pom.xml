@@ -32,10 +32,10 @@
 
 		<!-- Extent Reports -->
 		<dependency>
-    <groupId>com.aventstack</groupId>
-    <artifactId>extentreports</artifactId>
-    <version>5.0.9</version> <!-- or latest stable -->
-</dependency>
+			<groupId>com.aventstack</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>5.0.9</version> <!-- or latest stable -->
+		</dependency>
 
 
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
@@ -53,9 +53,54 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.11.0</version>  <!-- Ensure this is compatible with POI -->
 		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.30</version> <!-- Update to latest -->
+			<scope>provided</scope>
+		</dependency>
+
 	</dependencies>
 
+	<build>
+		<plugins>
 
-	
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.5.3</version>
+				<configuration>
+					<suiteXmlFiles>
+						<suiteXmlFile>XML file/testng.xml</suiteXmlFile>
+					</suiteXmlFiles>
+					<systemPropertyVariables>
+						<Executionbrowser>${browser}</Executionbrowser>
+						<appURL>${urlToBeTested}</appURL>
+					</systemPropertyVariables>
+
+				</configuration>
+			</plugin>
+
+			<!-- Maven Compiler Plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.11.0</version> <!-- Make sure this is up to date -->
+				<configuration>
+					<source>17</source>  <!-- or 18, depending on your JDK -->
+					<target>17</target>
+					<compilerArgs>
+						<!-- This line gives Lombok access to internal modules -->
+						<arg>--add-exports</arg>
+						<arg>
+							jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
 
 </project>
